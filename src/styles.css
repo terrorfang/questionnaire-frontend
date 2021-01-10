@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+
+* {
+    /* font-family: 'Kanit'; */
+    font-family: 'Kanit', sans-serif;
+    /* font-family: 'Prompt', sans-serif; */
+    /* font-size: 18px; */
+    font-size: 1.03rem;
+}
+
+html, body { height: 100%; }
+body { 
+    /* margin: 0;   */
+    /* max-width: 100%; */
+}
+
+.header {
+    margin: auto;
+    background-color: white;
+    /* display: flex; */
+    /* flex-direction: column; */
+    text-align: center;
+    /* align-items: center; */
+    min-width: 660px;
+    max-width: 1100px;
+    /* width: 100%; */
+}
+
+.container {
+    /* min-width: 680px; */
+    padding: 10px;
+    border-radius: 10px;
+    background: rgb(2,0,36);
+    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(255,255,255,1) 0%, rgba(230,248,255,1) 100%);
+    margin: auto;
+    min-width: 660px;
+    max-width: 1100px;
+    /* width: 100%; */
+}

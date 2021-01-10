@@ -1,0 +1,376 @@
+<div class="container">
+    <form [formGroup]="myForm" (ngSubmit)="submitForm(myForm.value)" novalidate>
+        <h2 style="font-size: 20px; text-align: center;">{{info.title[0]}}</h2>
+        <h2 style="font-size: 20px; text-align: center;">{{info.title[1]}}</h2>
+            <section>
+                <h2>{{info.sections[1]}}</h2>
+            </section>
+            <mat-divider></mat-divider>
+            <section>
+                <mat-label>{{info.question[1]}}</mat-label>
+                <mat-radio-group formControlName="gender" class="example-radio-group">
+                    <mat-radio-button class="example-radio-button" *ngFor="let item of info.gender" value="{{item.type}}">
+                        {{item.value}}</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <br>
+            <mat-divider></mat-divider>
+            <section>
+                <mat-label>{{info.question[2]}}</mat-label>
+                <mat-radio-group formControlName="age" class="example-radio-group">
+                    <mat-radio-button class="example-radio-button" *ngFor="let item of info.age" value="{{item.type}}">
+                        {{item.value}}</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <br>
+            <mat-divider></mat-divider>
+            <section>
+                <mat-label>{{info.question[3]}}</mat-label>
+                <mat-radio-group formControlName="education" class="example-radio-group">
+                    <mat-radio-button class="example-radio-button" *ngFor="let item of info.education"
+                        value="{{item.type}}">
+                        {{item.value}}</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <br>
+            <mat-divider></mat-divider>
+            <section>
+                <mat-label>{{info.question[4]}}</mat-label>
+                <mat-radio-group formControlName="occupation" class="example-radio-group2">
+                    <mat-radio-button class="example-radio-button" *ngFor="let item of info.occupation"
+                        value="{{item.type}}" (change)="ocOther($event)">
+                        {{item.value}}</mat-radio-button>
+                    <mat-form-field *ngIf="ocOtherShow">
+                        <!-- <mat-label>อื่นๆ</mat-label> -->
+                        <input type="text" matInput formControlName="occupationOther" placeholder="โปรดระบุ">
+                    </mat-form-field>
+                </mat-radio-group>
+            </section>
+        <!-- </div> -->
+        <br>
+
+        
+        <!-- <br> -->
+        <section>
+            <!-- <mat-label>{{info.sections[2]}}</mat-label> -->
+            <h2>{{info.sections[2]}}</h2>
+        </section>
+        <mat-divider></mat-divider>
+        <section>
+            <mat-label>{{info.question[5]}}</mat-label>
+            <mat-radio-group formControlName="currentuser" class="example-radio-group">
+                <mat-radio-button class="example-radio-button" *ngFor="let item of info.currentuser"
+                    value="{{item.type}}" (change)="currentUsercheck($event)">
+                    {{item.value}}</mat-radio-button>
+            </mat-radio-group>
+        </section>
+        <!-- <br> -->
+        <br *ngIf="!isCurrent">
+        <mat-divider *ngIf="!isCurrent"></mat-divider>
+        <section *ngIf="!isCurrent">
+            <mat-label>{{info.question[6]}}</mat-label>
+            <mat-radio-group formControlName="futureinteresting" class="example-radio-group">
+                <mat-radio-button class="example-radio-button" *ngFor="let item of info.futureinteresting"
+                    value="{{item.type}}" (change)="futureCheck($event)">
+                    {{item.value}}</mat-radio-button>
+            </mat-radio-group>
+        </section>
+        <br *ngIf="!isCurrent && !isFuture">
+        <mat-divider *ngIf="!isCurrent && !isFuture"></mat-divider>
+        <section *ngIf="!isCurrent && !isFuture">
+            <mat-label>{{info.question[7]}}</mat-label>
+            <mat-radio-group formControlName="policyterms" class="example-radio-group">
+                <mat-radio-button class="example-radio-button" *ngFor="let item of info.policyterms"
+                    value="{{item.type}}">
+                    {{item.value}}</mat-radio-button>
+            </mat-radio-group>
+        </section>
+        <br *ngIf="!isCurrent || !isFuture">
+        <mat-divider></mat-divider>
+        <!-- <section *ngIf="!isCurrent">
+            <mat-label>{{info.question[8]}}</mat-label>
+            <mat-radio-group formControlName="reasonavailability" class="example-radio-group2">
+                <div *ngFor="let item of info.reasonavailability">
+                    <mat-radio-button class="example-radio-button" value="{{item.type}}" (change)="reasonOther($event)">
+                    </mat-radio-button>
+                    <mat-label>{{item.value}}</mat-label>
+                </div>
+                <mat-form-field *ngIf="reasonOtherShow">
+                    <input type="text" matInput formControlName="reasonavailabilityOther" placeholder="โปรดระบุ">
+                </mat-form-field>
+            </mat-radio-group>
+        </section> -->
+<!-- {{myForm.value|json}} -->
+        <section *ngIf="!isCurrent">
+            <mat-label>{{info.question[8]}}</mat-label>
+            <mat-radio-group formControlName="reasonavailability" class="example-radio-group2">
+                <mat-radio-button class="example-radio-button" *ngFor="let item of info.reasonavailability"
+                    value="{{item.type}}" (change)="reasonOther($event)">
+                    {{item.value}}</mat-radio-button>
+                <mat-form-field *ngIf="reasonOtherShow">
+                    <!-- <mat-label>อื่นๆ</mat-label> -->
+                    <input type="text" matInput formControlName="reasonavailabilityOther" placeholder="โปรดระบุ">
+                </mat-form-field>
+            </mat-radio-group>
+        </section>
+
+        <br *ngIf="!isCurrent && !isFuture">
+        <!-- <mat-divider *ngIf="!isNotCurrent"></mat-divider>
+        <section *ngIf="!isNotCurrent">
+            <mat-label>{{info.question[9]}}</mat-label>
+            <mat-radio-group formControlName="supportrequest" class="example-radio-group2">
+                <div *ngFor="let item of info.supportrequest;let i = index">
+                    <mat-radio-button id="supportrequest_{{i}}" class="example-radio-button" value="{{item.type}}"
+                        (change)="supportOther($event)">
+                    </mat-radio-button>
+                    <mat-label for="supportrequest_{{i}}">{{item.value}}</mat-label>
+                </div>
+                <mat-form-field *ngIf="supportOtherShow">
+                    <input type="text" matInput formControlName="supportrequestOther" placeholder="โปรดระบุ">
+                </mat-form-field>
+            </mat-radio-group>
+        </section> -->
+
+        <section *ngIf="!isNotCurrent">
+            <mat-label>{{info.question[9]}}</mat-label>
+                <mat-radio-group formControlName="supportrequest" class="example-radio-group3">
+                    <mat-radio-button class="example-radio-button" *ngFor="let item of info.supportrequest"
+                        value="{{item.type}}" (change)="supportOther($event)">
+                        <a style="font-size: 18px">{{item.value}}</a></mat-radio-button>
+                    <mat-form-field *ngIf="supportOtherShow">
+                        <input type="text" matInput formControlName="supportrequestOther" placeholder="โปรดระบุ">
+                    </mat-form-field>
+                </mat-radio-group>
+        </section>
+
+        <!-- <br *ngIf="!isNotCurrent"> -->
+        <br *ngIf="!isCurrent && !isFuture && !isNotCurrent">
+
+        <section *ngIf="!isNotCurrent">
+            <!-- <mat-label>{{info.sections[3]}}</mat-label> -->
+            <h2>{{info.sections[3]}}</h2>
+        </section>
+        <section *ngIf="!isNotCurrent">
+            <!-- <mat-label>{{info.sections[3]}}</mat-label> -->
+            <mat-label style="margin-left: 16px; color: red;">*</mat-label> &nbsp;
+            <mat-label>5=พอใจมาก, 4=พอใจ, 3=ปานกลาง, 2=น้อย, 1=น้อยที่สุด</mat-label>
+        </section>
+        <mat-divider *ngIf="!isNotCurrent"></mat-divider>
+        <!-- {{myForm.value|json}} -->
+        <table *ngIf="!isNotCurrent">
+            <thead>
+                <td style="text-align: center; font-weight: 600;"><br>ความคิดเห็น</td>
+                <td style="text-align: center; font-weight: 600;">ระดับความพึงพอใจ</td>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: center;">
+                        <!-- 5=พอใจมาก,4=พอใจ,3=ปานกลาง,2=น้อย,1=น้อยที่สุด -->
+                    </td>
+                    <td>
+                        <div style="width: 175px;">
+
+                            <div class="inline" style="width:35px; text-align: center;">
+                                <label>5</label>
+                            </div>
+                            <div class="inline" style="width:35px; text-align: center;">
+                                <label>4</label>
+                            </div>
+                            <div class="inline" style="width:35px; text-align: center;">
+                                <label>3</label>
+                            </div>
+                            <div class="inline" style="width:35px; text-align: center;">
+                                <label>2</label>
+                            </div>
+                            <div class="inline" style="width:35px; text-align: center;">
+                                <label>1</label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- <mat-divider *ngIf="!isNotCurrent"></mat-divider> -->
+                <tr>
+                    <td style="background-color: lightgray;">
+                        <mat-label style="margin-left:14px;">{{info.question[10]}}</mat-label>
+                    </td>
+                    <td style="background-color: lightgray;">
+                        <mat-radio-group formControlName="satis_BENEFITS">
+                            <div class="myradiobut" *ngFor="let item of info.p">
+                                <mat-radio-button  value="{{item}}">
+                                </mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-label style="margin-left:14px;">{{info.question[11]}}</mat-label>
+                    </td>
+                    <td>
+                        <mat-radio-group formControlName="satis_PERFORMANCES">
+                            
+                            <div class="myradiobut" *ngFor="let item of info.p">
+                                <mat-radio-button value="{{item}}">
+                                </mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color: lightgray;">
+                        <mat-label style="margin-left:14px;">{{info.question[12]}}</mat-label>
+                    </td>
+                    <td style="background-color: lightgray;">
+                        <mat-radio-group formControlName="satis_COMPANIES">
+                            <div class="myradiobut" *ngFor="let item of info.p">
+                                <mat-radio-button value="{{item}}">
+                                </mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </td>
+                </tr>
+                <!-- <mat-divider *ngIf="!isNotCurrent"></mat-divider> -->
+                <tr>
+                    <td>
+                        <mat-label style="margin-left:14px;">{{info.question[13]}}</mat-label>
+                    </td>
+                    <td>
+                        <mat-radio-group formControlName="satis_RELIABLE">
+                            <div class="myradiobut" *ngFor="let item of info.p">
+                                <mat-radio-button value="{{item}}">
+                                </mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </td>
+                </tr>
+                <!-- <mat-divider *ngIf="!isNotCurrent"></mat-divider> -->
+                <tr>
+                    <td style="background-color: lightgray;">
+                        <mat-label style="margin-left:14px;">{{info.question[14]}}</mat-label>
+                    </td>
+                    <td style="background-color: lightgray;">
+                        <mat-radio-group formControlName="satis_CONFIDENCES">
+                            <div class="myradiobut" *ngFor="let item of info.p">
+                                <mat-radio-button value="{{item}}">
+                                </mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br *ngIf="!isNotCurrent">
+        <section *ngIf="!isNotCurrent">
+            <!-- <mat-label>{{info.sections[4]}}</mat-label> -->
+            <h2>{{info.sections[4]}}</h2>
+        </section>
+        <mat-divider *ngIf="!isNotCurrent"></mat-divider>
+        <section *ngIf="!isNotCurrent">
+            <mat-label>{{info.question[15] + ' ' + info.question[17]}}</mat-label>
+            <!-- <mat-label>{{info.question[15]}}</mat-label><br> -->
+            <!-- <mat-label>{{info.question[17]}}</mat-label> -->
+            <mat-radio-group formControlName="satisfactionoverall" class="example-radio-group">
+                <mat-radio-button class="example-radio-button" *ngFor="let item of info.pt" value="{{item.type}}">
+                    {{item.value}}</mat-radio-button>
+            </mat-radio-group>
+        </section>
+        <br *ngIf="!isNotCurrent">
+        <section>
+            <!-- <mat-label>{{info.sections[5]}}</mat-label> -->
+            <h2>{{info.sections[5]}}</h2>
+        </section>
+        <mat-divider></mat-divider>
+        <!-- <section> -->
+        <!-- <mat-label>{{info.question[16]}}</mat-label> -->
+
+        <!-- <mat-form-field appearance="standard">
+                <textarea rows=2 wrap="hard" matInput formControlNam="suggestion"
+                    style="font-family: 'Kanit', sans-serif;font-size: 16px; word-wrap: break-word; resize: none;"
+                    placeholder="ระบุ"></textarea>
+            </mat-form-field> -->
+        <!-- </section> -->
+        <section>
+            <mat-form-field style="width: 100%;">
+                <!-- <input type="text" rows="2" matInput formControlName="suggestion" placeholder="ข้อเสนอแนะ"> -->
+                <textarea rows="4" matInput #message maxlength="5000" formControlName="suggestion" placeholder="ข้อเสนอแนะ"></textarea>
+                <mat-hint align="end">{{message.value.length}} / 5000</mat-hint>
+            </mat-form-field>
+        </section>
+        <br>
+        <!-- <mat-divider></mat-divider> -->
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('gender','required')">กรุณาระบุเพศ</mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('age','required')">กรุณาระบุอายุ</mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('education','required')">กรุณาระบุวุฒิการศึกษา</mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('occupation','required')">กรุณาระบุอาชีพ</mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('currentuser','required')">กรุณาเลือกตัวเลือกในข้อ 5</mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('futureinteresting','required')">กรุณาเลือกตัวเลือกในข้อ 6
+            </mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('policyterms','required')">กรุณาเลือกตัวเลือกในข้อ 7</mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('reasonavailability','required')">กรุณาเลือกตัวเลือกในข้อ 8
+            </mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('supportrequest','required')">กรุณาเลือกตัวเลือกในข้อ 9</mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('satis_BENEFITS','required')">กรุณาเลือกตัวเลือกในข้อ 10.1
+            </mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('satis_PERFORMANCES','required')">กรุณาเลือกตัวเลือกในข้อ 10.2
+            </mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('satis_COMPANIES','required')">กรุณาเลือกตัวเลือกในข้อ 10.3
+            </mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('satis_RELIABLE','required')">กรุณาเลือกตัวเลือกในข้อ 10.4
+            </mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('satis_CONFIDENCES','required')">กรุณาเลือกตัวเลือกในข้อ 10.5
+            </mat-error>
+        </section>
+        <section style="text-align: center;">
+            <mat-error *ngIf="isSubmit && hasError('satisfactionoverall','required')">กรุณาเลือกตัวเลือกในส่วนที่ 2
+            </mat-error>
+        </section>
+        <mat-divider></mat-divider>
+        <br>
+        <div style="text-align: center;">
+            <button mat-flat-button color="primary" type="submit" [class.spinner]="loading" [disabled]="loading">ส่งแบบสอบถาม</button>
+        </div>
+    </form>
+    <br>
+    <!-- {{myForm.value|json}} -->
+</div>
+<br>
+
+<!-- <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </form> -->
